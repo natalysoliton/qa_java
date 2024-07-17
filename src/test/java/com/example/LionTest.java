@@ -7,6 +7,12 @@ import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
+import static org.hamcrest.CoreMatchers.equalTo;
+import java.util.List;
+import org.hamcrest.MatcherAssert;
+import java.util.Arrays;
+
+
 
 @RunWith(MockitoJUnitRunner.class)
 public class LionTest extends TestCase {
@@ -41,5 +47,24 @@ public class LionTest extends TestCase {
 
         lion.getFood();
         Mockito.verify(feline).getFood(Mockito.anyString());
+    }
+
+    @Test
+    public void getKittensIsCorrect() throws Exception{
+        lion = new Lion(MALE, feline);
+        int expectedCount = 5;
+        Mockito.when(feline.getKittens()).thenReturn(expectedCount);
+
+       MatcherAssert.assertThat("Некорректное количество",
+                lion.getKittens(),
+                equalTo(expectedCount)        );
+    }
+    @Test
+    public void getFoodIsCorrect() throws Exception {
+        lion = new Lion(MALE, feline);
+        List<String> expectedFood = Arrays.asList("Животные", "Птицы", "Рыба");
+        Mockito.when(feline.getFood("Хищник")).thenReturn(expectedFood);
+        List<String> food = lion.getFood();
+        assertEquals(expectedFood, food);
     }
 }

@@ -1,50 +1,45 @@
 package com.example;
 import junit.framework.TestCase;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mockito;
-import org.mockito.Spy;
-import org.mockito.junit.MockitoJUnitRunner;
+import static org.hamcrest.CoreMatchers.equalTo;
+import org.hamcrest.MatcherAssert;
 
-@RunWith(MockitoJUnitRunner.class)
 public class FelineTest extends TestCase {
     private final String expected = "Кошачьи";
-    private static final int EXPECTED_KITTENS_COUNT_FOR_MOCK = 1;
+    private static final int EXPECTED_KITTENS_COUNT = 1;
     private int kittensCount = 5;
 
-    @Spy
-    private Feline feline;
 
     @Test
     public void testEatMeat() throws Exception {
-        feline.eatMeat();
-        Mockito.verify(feline, Mockito.times(1)).getFood("Хищник");
+        Feline feline = new Feline();
+             MatcherAssert.assertThat("Неправильный список еды",
+                feline.eatMeat(),
+                equalTo(feline.getFood("Хищник"))
+        );
     }
 
     @Test
     public void testGetFamily() {
+        Feline feline = new Feline();
         String actual = feline.getFamily();
-        Mockito.verify(feline, Mockito.times(1)).getFamily();
-
-        assertEquals("Ожидаемое семейство не соответствует фактическому",
+             assertEquals("Ожидаемое семейство не соответствует фактическому",
                 expected, actual);
     }
 
     @Test
     public void testGetKittens() {
+        Feline feline = new Feline();
         int actual = feline.getKittens();
-        Mockito.verify(feline).getKittens(EXPECTED_KITTENS_COUNT_FOR_MOCK);
-
-        assertEquals("Фактическое количество котят не соответствует ожидаемому",
-                EXPECTED_KITTENS_COUNT_FOR_MOCK, actual);
+             assertEquals("Фактическое количество котят не соответствует ожидаемому",
+                EXPECTED_KITTENS_COUNT, actual);
     }
 
     @Test
     public void testTestGetKittens() {
+        Feline feline = new Feline();
         int actual = feline.getKittens(kittensCount);
-        Mockito.verify(feline).getKittens(Mockito.anyInt());
-
-        assertEquals("Фактическое количество котят не соответствует ожидаемому",
+             assertEquals("Фактическое количество котят не соответствует ожидаемому",
                 kittensCount, actual);
     }
 }

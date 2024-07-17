@@ -24,7 +24,15 @@ public class Lion {
         return hasMane;
     }
 
+//    public List<String> getFood() throws Exception {
+//        return feline.getFood("Хищник");
+//    }
+
     public List<String> getFood() throws Exception {
+        if (feline == null) {
+            throw new IllegalStateException("Feline не ясно");
+        }
         return feline.getFood("Хищник");
     }
+
 }
